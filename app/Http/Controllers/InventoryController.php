@@ -32,27 +32,19 @@ class InventoryController extends Controller
 
     public function store(Request $request)
     {
+        // Note that some of this would be good to move out to a service class, command, repository or at least
+        // other methods within the controller. I'm keeping it all in the controller to make the demo easy to see.
 
-        $validation = Validator::make($request->all(), $this->validationRules);
-        if ($validation->fails()) {
-            throw new FormValidationException($validation->errors());
-        }
+        $this->validateForm($request);
 
         if ($request->hasFile('image')) {
-            $fullDestinationPath = $this->imageDestinationBasePath . $request->get('brand_id');
-            $fileName = rawurldecode($request->file('image')->getClientOriginalName());
-            $request->file('image')->move(public_path() . $fullDestinationPath, $fileName);
-
-            $filePathAndName = $fullDestinationPath . "/" . $fileName;
+            $filePathAndName = $this->moveFileToDestination($request);
+            $this->inventory->image_path = $filePathAndName;
         }
 
-        // ooh, fancy!! :P
-        $input = collect($request->input());
-        $input->map(function ($value, $key) {
-            $this->inventory->{$key} = $value;
-        });
+        $this->setModelFields($request);
+        $this->inventory->active = true;
 
-        $this->inventory->image_path = $filePathAndName;
         $this->inventory->save();
 
         return ['success' => true];
@@ -66,9 +58,39 @@ class InventoryController extends Controller
 
     public function update(Request $request, $id)
     {
+        // Again, some of this logic could/should be abstracted and even normalized with the store
+        // method, but we'll keep it all in method and independent for demonstration purposes.
+
     }
 
     public function destroy($id)
     {
+    }
+
+    protected function validateForm($request)
+    {
+        $validation = Validator::make($request->all(), $this->validationRules);
+        if ($validation->fails()) {
+            throw new FormValidationException($validation->errors());
+        }
+    }
+
+    protected function moveFileToDestination($request)
+    {
+        $fullDestinationPath = $this->imageDestinationBasePath . $request->get('brand_id');
+        $fileName = rawurldecode($request->file('image')->getClientOriginalName());
+        $request->file('image')->move(public_path() . $fullDestinationPath, $fileName);
+
+        $filePathAndName = $fullDestinationPath . "/" . $fileName;
+        return $filePathAndName;
+    }
+
+    protected function setModelFields($request)
+    {
+        // ooh, fancy!! :P
+        $input = collect($request->input());
+        $input->map(function ($value, $key) {
+            $this->inventory->{$key} = $value;
+        });
     }
 }
