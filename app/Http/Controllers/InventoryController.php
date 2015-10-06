@@ -42,7 +42,7 @@ class InventoryController extends Controller
             $this->inventory->image_path = $filePathAndName;
         }
 
-        $this->setModelFields($request);
+        $this->setModelFields($request->all(), $this->inventory);
         $this->inventory->active = true;
 
         $this->inventory->save();
@@ -60,11 +60,46 @@ class InventoryController extends Controller
     {
         // Again, some of this logic could/should be abstracted and even normalized with the store
         // method, but we'll keep it all in method and independent for demonstration purposes.
+        $this->validateForm($request);
+
+        $inventoryItem = $this->inventory->findOrFail($id);
+
+        if ($request->hasFile('image')) {
+            $filePathAndName = $this->moveFileToDestination($request);
+            $inventoryItem->image_path = $filePathAndName;
+        }
+
+        $requestData = $request->except('_method');
+        $requestData['active'] = (bool) $requestData['active']; // Get false as the constant, not as a string
+
+        $this->setModelFields($requestData, $inventoryItem);
+        $inventoryItem->active = true;
+
+        $inventoryItem->save();
+
+        return ['success' => true];
 
     }
 
     public function destroy($id)
     {
+        $this->inventory->findOrFail($id)->delete();
+        return ['success' => true];
+    }
+
+    public function toggleActive(Request $request, $id)
+    {
+        $this->inventoryItem->findOrFail($id);
+        // should we handle this with a toggle or specific set active/inactive?
+        // if we do a toggle we're putting the responsibility of knowing the existing state on the server
+        // if we do specific set active/inactive routes and methods we're putting the responsibility of knowing the existing state on the client
+        //
+        // Since we're building this with a JS front end, we should put the responsibility on the client. If we put it on the server we would have
+        // to make sure our front end state display matched the server whereas if we make it the client's responsibility then we don't have to worry as
+        // much (e.g. you're always telling the server what the state *should be* according to the client regardless of what it is currently).
+        //
+        // If we were building server rendered views it would probably make more sense to make it a toggle because the state of the view will always
+        // be generated *after* the state update has been set by the server.
     }
 
     protected function validateForm($request)
@@ -85,12 +120,13 @@ class InventoryController extends Controller
         return $filePathAndName;
     }
 
-    protected function setModelFields($request)
+    protected function setModelFields(array $requestData, &$inventoryItem)
     {
+        $input = collect($requestData);
+
         // ooh, fancy!! :P
-        $input = collect($request->input());
-        $input->map(function ($value, $key) {
-            $this->inventory->{$key} = $value;
+        $input->map(function ($value, $key) use ($inventoryItem) {
+            $inventoryItem->{$key} = $value;
         });
     }
 }
