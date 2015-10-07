@@ -87,19 +87,44 @@ class InventoryController extends Controller
         return ['success' => true];
     }
 
-    public function toggleActive(Request $request, $id)
+    // I'm leaving this in as a commented out rough in because I think it's a good bit of
+    // structural planning that you may not see normally. I started with the idea of toggling the
+    // status but then stopped because I didn't know if that was the best choice. Here's why I decided
+    // against it:
+    //
+    // public function toggleActive(Request $request, $id)
+    // {
+    //     // should we handle this with a toggle or specific set active/inactive?
+    //     // if we do a toggle we're putting the responsibility of knowing the existing state on the server
+    //     // if we do specific set active/inactive routes and methods we're putting the responsibility of knowing the existing state on the client
+    //     //
+    //     // Since we're building this with a JS front end, we should put the responsibility on the client. If we put it on the server we would have
+    //     // to make sure our front end state display matched the server whereas if we make it the client's responsibility then we don't have to worry as
+    //     // much (e.g. you're always telling the server what the state *should be* according to the client regardless of what it is currently).
+    //     //
+    //     // If we were building server rendered views it would probably make more sense to make it a toggle because the state of the view will always
+    //     // be generated *after* the state update has been set by the server.
+    // }
+
+    public function markItemActive($id)
     {
-        $this->inventoryItem->findOrFail($id);
-        // should we handle this with a toggle or specific set active/inactive?
-        // if we do a toggle we're putting the responsibility of knowing the existing state on the server
-        // if we do specific set active/inactive routes and methods we're putting the responsibility of knowing the existing state on the client
-        //
-        // Since we're building this with a JS front end, we should put the responsibility on the client. If we put it on the server we would have
-        // to make sure our front end state display matched the server whereas if we make it the client's responsibility then we don't have to worry as
-        // much (e.g. you're always telling the server what the state *should be* according to the client regardless of what it is currently).
-        //
-        // If we were building server rendered views it would probably make more sense to make it a toggle because the state of the view will always
-        // be generated *after* the state update has been set by the server.
+        $item = $this->inventory->findOrFail($id);
+
+        $item->active = true;
+        $item->save();
+
+        return ['success' => true];
+    }
+
+    public function markItemInactive($id)
+    {
+        $item = $this->inventory->findOrFail($id);
+
+        $item->active = false;
+        $item->save();
+
+        return ['success' => true];
+
     }
 
     protected function validateForm($request)

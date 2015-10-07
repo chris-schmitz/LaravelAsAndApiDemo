@@ -2,5 +2,7 @@
 
 Route::get('/brands', 'BrandController@index');
 Route::get('/brand/{brandId}/inventory', 'BrandInventoryController@index');
+
 Route::resource('/inventory', 'InventoryController');
-Route::post('/inventory/{inventoryId}/toggleActive', 'InventoryController@toggleActive');
+Route::put('/inventory/{inventoryId}/markactive', 'InventoryController@markItemActive');
+Route::put('/inventory/{inventoryId}/markinactive', 'InventoryController@markItemInactive');
