@@ -5,7 +5,7 @@ Ext.define('InventoryDemo.view.main.MainController', {
 
     onOpenBrandTab:function (record, e){
         var tabset = this.lookupReference('inventoryTabSet');
-        var newtab = Ext.create('InventoryDemo.view.inventory.Inventory',{
+        var newtab = Ext.create('InventoryDemo.view.inventory.list.Inventory',{
             title: record.get('name')
         });
 
