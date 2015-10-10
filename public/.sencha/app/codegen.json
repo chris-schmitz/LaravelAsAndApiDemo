@@ -272,6 +272,18 @@
         "modelNamespace": "InventoryDemo.model",
         "name": "Brand"
       }
+    },
+    "app/model/Inventory.js": {
+      "source": "{modelFileName}.js.tpl.merge",
+      "version": "31d5356142a167c72422f7902f19df3c583f3249",
+      "parameters": {
+        "appName": "InventoryDemo",
+        "baseClass": "Ext.data.Model",
+        "fields": "id:auto:null,brand_id:auto:null,name:auto:null,price:auto:null,active:auto:null,image_path:auto:null",
+        "modelFileName": "Inventory",
+        "modelNamespace": "InventoryDemo.model",
+        "name": "Inventory"
+      }
     }
   }
 }

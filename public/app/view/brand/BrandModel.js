@@ -10,12 +10,16 @@ Ext.define('InventoryDemo.view.brand.BrandModel', {
 
     stores:{
         brands:{
-            // model: 'InventoryDemo.model.Brand',
-            fields:['id', 'name'],
-            data:[
-                {id: 1, name: 'test'},
-                {id: 2, name: 'test again'},
-            ]
+            model: 'InventoryDemo.model.Brand',
+            autoLoad: true,
+            proxy:{
+                type: 'rest',
+                url: 'brands',
+                reader:{
+                    type: 'json',
+                    rootProperty: 'records'
+                }
+            }
         }
     }
 

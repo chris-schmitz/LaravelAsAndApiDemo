@@ -4,8 +4,7 @@ Ext.define('InventoryDemo.view.main.Main', {
 
     requires: [
         'Ext.plugin.Viewport',
-        'Ext.window.MessageBox',
-
+        'InventoryDemo.view.brand.Brand',
         'InventoryDemo.view.main.MainController',
         'InventoryDemo.view.main.MainModel',
     ],
@@ -13,17 +12,28 @@ Ext.define('InventoryDemo.view.main.Main', {
     controller: 'main',
     viewModel: 'main',
 
+
     title: '<h1>Inventory Demo</h1>',
-    layout:{
-        type: 'hbox',
-        align: 'stretch'
-    },
+    layout: 'border',
+
     items:[
         {
-            xtype: 'brand'
+            xtype: 'brand',
+            title: 'Brands',
+            header: false,
+            region: 'west',
+            width: 200,
+            split: true,
+            listeners:{
+                openBrandTab: 'onOpenBrandTab'
+            }
         },
         {
-            xtype: 'inventory'
+            xtype: 'tabpanel',
+            title: 'Inventories',
+            header: false,
+            region: 'center',
+            reference: 'inventoryTabSet'
         }
     ]
 });

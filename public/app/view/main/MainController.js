@@ -1,21 +1,23 @@
-/**
- * This class is the controller for the main view for the application. It is specified as
- * the "controller" of the Main view class.
- *
- * TODO - Replace this content of this view to suite the needs of your application.
- */
 Ext.define('InventoryDemo.view.main.MainController', {
     extend: 'Ext.app.ViewController',
 
     alias: 'controller.main',
 
-    onItemSelected: function (sender, record) {
-        Ext.Msg.confirm('Confirm', 'Are you sure?', 'onConfirm', this);
-    },
+    onOpenBrandTab:function (record, e){
+        var tabset = this.lookupReference('inventoryTabSet');
+        var newtab = Ext.create('InventoryDemo.view.inventory.Inventory',{
+            title: record.get('name')
+        });
 
-    onConfirm: function (choice) {
-        if (choice === 'yes') {
-            //
-        }
+        // note, this *shouldn't* be the way we have to make this request,
+        // but I'm not exactly sure how to manipulate the sencha proxy yet
+        // to rebuild the url to handle the proper rest url to make the
+        // request, so we're hacking it out.
+        var store = newtab.getViewModel().getStore('inventory');
+        store.getProxy().setExtraParam('brandid', record.getId());
+        store.load();
+
+        tabset.add(newtab);
+        tabset.setActiveTab(newtab);
     }
 });

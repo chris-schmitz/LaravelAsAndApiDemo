@@ -1,6 +1,5 @@
-
 Ext.define("InventoryDemo.view.inventory.Inventory",{
-    extend: "Ext.panel.Panel",
+    extend: "Ext.grid.Panel",
     xtype: 'inventory',
 
     requires: [
@@ -13,5 +12,19 @@ Ext.define("InventoryDemo.view.inventory.Inventory",{
         type: "inventory-inventory"
     },
 
-    html: "Hello, World!!"
+    bind:{
+        store: '{inventory}'
+    },
+    closable: true,
+
+    listeners:{
+        itemclick: 'showDetails'
+    },
+
+    columns:[
+        { text: 'Name', dataIndex: 'name', flex: 1 },
+        { text: 'Price', dataIndex: 'price' },
+        { text: 'Active', dataIndex: 'active' },
+    ]
+
 });

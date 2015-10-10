@@ -1,4 +1,3 @@
-
 Ext.define("InventoryDemo.view.brand.Brand",{
     extend: "Ext.grid.Panel",
     xtype: 'brand',
@@ -13,10 +12,17 @@ Ext.define("InventoryDemo.view.brand.Brand",{
         type: "brand-brand"
     },
 
+    listeners:{
+        itemclick: 'onBrandSelect'
+    },
+
     bind:{
         store: '{brands}'
     },
+    defaults:{
+        xtype: 'gridcolumn'
+    },
     columns:[
-        {text: 'Name', dataIndex: 'name'}
+        {text: 'Brand', dataIndex: 'name', flex: 1}
     ]
 });
