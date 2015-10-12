@@ -16,7 +16,6 @@ Ext.application({
     // will gain a "viewport" plugin if it does not extend Ext.Viewport. With the
     // modern toolkit, the main view will be added to the Viewport.
     //
-    // mainView: 'InventoryDemo.view.brand.Brand'
     mainView: 'InventoryDemo.view.main.Main'
 	
     //-------------------------------------------------------------------------

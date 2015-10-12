@@ -12,10 +12,14 @@ Ext.define("InventoryDemo.view.inventory.list.Inventory",{
         type: "inventory-inventory"
     },
     closable: true,
-
+    layout:{
+        type: 'hbox',
+        align: 'stretch'
+    },
     items:[
         {
             xtype: 'grid',
+            flex: 1,
             bind:{
                 store: '{inventory}'
             },

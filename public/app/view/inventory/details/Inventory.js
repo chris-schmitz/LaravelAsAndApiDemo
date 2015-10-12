@@ -11,7 +11,8 @@ Ext.define("InventoryDemo.view.inventory.details.Inventory",{
         type: "inventory-details-inventory"
     },
 
-    flex: 2,
+    flex: 1,
+    closable: true,
     bodyPadding: 10,
     reference: 'inventorydetails',
     defaults:{
