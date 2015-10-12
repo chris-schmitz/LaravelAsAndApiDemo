@@ -3,27 +3,19 @@ Ext.define('InventoryDemo.view.inventory.details.InventoryController', {
     alias: 'controller.inventory-details-inventory',
 
     updateRecord: function (button, e){
-        debugger;
-        var form = button.up('form').getForm();
-        // form.setValues({'_method': ''});
-        form.submit({
-            scope: this,
-            success: function (response){
-                 Ext.toast({
-                     html: 'Record updated.',
-                     title: 'Success',
-                     width: 200,
-                     align: 't'
-                 });
-            }
-        });
-        
+        var record = this.getViewModel().get('inventoryitem');
+        record.getProxy().setExtraParam('_method', 'PUT');
+        // is there a way of adding an extra parameter here for "_method='PUT'?"
+        record.save();
     },
 
-    // deleteRecord: function (button, e){
-    //     debugger;
-    //     var form = button.up('form').getForm();
-    //     form.setValues({'_method': 'DELETE'});
-    // }
+    deleteRecord: function (button, e){
+        debugger;
+        var record = this.getViewModel().get('inventoryitem');
+        record.getProxy().setExtraParam('_method', 'DELETE');
+        record.erase();
+        this.getView().fireEvent('refreshList');
+        this.getView().destroy();
+    }
     
 });

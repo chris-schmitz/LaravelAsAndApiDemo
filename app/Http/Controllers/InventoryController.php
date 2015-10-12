@@ -60,7 +60,7 @@ class InventoryController extends Controller
     {
         // Again, some of this logic could/should be abstracted and even normalized with the store
         // method, but we'll keep it all in method and independent for demonstration purposes.
-        $this->validateForm($request);
+        // $this->validateForm($request);
 
         $inventoryItem = $this->inventory->findOrFail($id);
 
@@ -70,7 +70,7 @@ class InventoryController extends Controller
         }
 
         $requestData = $request->except('_method');
-        $requestData['active'] = (bool) $requestData['active']; // Get false as the constant, not as a string
+        // $requestData['active'] = (bool) $requestData['active']; // Get false as the constant, not as a string
 
         $this->setModelFields($requestData, $inventoryItem);
         $inventoryItem->active = true;
@@ -148,6 +148,9 @@ class InventoryController extends Controller
     protected function setModelFields(array $requestData, &$inventoryItem)
     {
         $input = collect($requestData);
+
+        // removes the sencha cache buster when saving
+        $input->forget('_dc');
 
         // ooh, fancy!! :P
         $input->map(function ($value, $key) use ($inventoryItem) {
