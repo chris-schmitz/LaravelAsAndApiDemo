@@ -50,7 +50,7 @@ Ext.define("InventoryDemo.view.inventory.details.Inventory",{
                 {
                     name: 'brand_id',
                     fieldLabel: 'Brand ID',
-                    // readOnly: true,
+                    readOnly: true,
                     bind: '{brandId}'
                 }
             ]
