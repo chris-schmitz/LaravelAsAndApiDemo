@@ -14,7 +14,6 @@ Ext.define("InventoryDemo.view.inventory.details.Inventory",{
     flex: 1,
     closable: true,
     bodyPadding: 10,
-    session: true,
     reference: 'inventorydetails',
     defaults:{
         layout: 'anchor',
@@ -25,19 +24,15 @@ Ext.define("InventoryDemo.view.inventory.details.Inventory",{
             xtype: 'toolbar',
             dock: 'bottom',
             ui: 'footer',
+            reference: 'buttonbar',
             items:[
-                {xtype: 'button', text: 'Update', handler: 'updateRecord'},
-                {xtype: 'button', text: 'Delete', handler: 'deleteRecord'}
+                {xtype: 'button', text: 'Delete', handler: 'deleteRecord'},
+                "->"
             ]
         }
     ],
 
     items:[
-        {
-            xtype: 'hiddenfield',
-            name: '_method',
-            value: 'PUT'
-        },
         {
             xtype: 'fieldset',
             title: 'IDs',
@@ -55,8 +50,8 @@ Ext.define("InventoryDemo.view.inventory.details.Inventory",{
                 {
                     name: 'brand_id',
                     fieldLabel: 'Brand ID',
-                    readOnly: true,
-                    bind: '{inventoryitem.brand_id}'
+                    // readOnly: true,
+                    bind: '{brandId}'
                 }
             ]
         },
@@ -80,5 +75,4 @@ Ext.define("InventoryDemo.view.inventory.details.Inventory",{
             ]
         }
     ]
-
 });

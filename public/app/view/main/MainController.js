@@ -8,7 +8,6 @@ Ext.define('InventoryDemo.view.main.MainController', {
     },
 
     onOpenBrandTab:function (record, e){
-        debugger;
         var tabset = this.lookupReference('inventoryTabSet');
         var existingTab = this.getOpenTabs().filter(function (tab){
             return (record.get('name') == tab.title);
@@ -18,6 +17,7 @@ Ext.define('InventoryDemo.view.main.MainController', {
             var newtab = Ext.create('InventoryDemo.view.inventory.list.Inventory',{
                 title: record.get('name')
             });
+            newtab.getViewModel().set('brandId', record.getId());
 
             // note, this *shouldn't* be the way we have to make this request,
             // but I'm not exactly sure how to manipulate the sencha proxy yet

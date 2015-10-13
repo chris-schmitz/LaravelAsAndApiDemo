@@ -17,6 +17,7 @@ Ext.define("InventoryDemo.view.inventory.list.Inventory",{
         refreshList: 'onRefreshList'
     },
 
+
     layout:{
         type: 'hbox',
         align: 'stretch'
@@ -25,6 +26,11 @@ Ext.define("InventoryDemo.view.inventory.list.Inventory",{
         {
             xtype: 'grid',
             flex: 1,
+
+            tbar:[
+                {xtype: 'button', text: 'New Item', handler: 'newInventoryItem'}
+            ],
+
             bind:{
                 store: '{inventory}'
             },
