@@ -7,6 +7,7 @@ Ext.define('InventoryDemo.view.inventory.details.InventoryController', {
         var record = Ext.create('InventoryDemo.model.Inventory');
         // probably not the right way of setting the model's data, but it works!!!
         record.data = recordData;
+        record.set('brand_id', this.getViewModel().get('brandId'));
         record.save();
         this.showMessage('Record Saved', 'The record has been saved.');
     },
