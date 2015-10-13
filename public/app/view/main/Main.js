@@ -12,6 +12,7 @@ Ext.define('InventoryDemo.view.main.Main', {
     controller: 'main',
     viewModel: 'main',
 
+    session: true,
 
     title: '<h1>Inventory Demo</h1>',
     layout: 'border',

@@ -13,6 +13,12 @@ Ext.define('InventoryDemo.model.Inventory', {
     proxy:{
         type: 'rest',
         url: 'inventory',
+        actionMethods:{
+            create: 'POST',
+            read: 'GET',
+            update: 'POST',
+            destroy: 'POST'
+        },
         reader:{
             type: 'json',
             rootProperty: 'record'

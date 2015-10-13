@@ -2,6 +2,10 @@ Ext.define('InventoryDemo.view.inventory.list.InventoryModel', {
     extend: 'Ext.app.ViewModel',
     alias: 'viewmodel.inventory-inventory',
 
+    data:{
+        brandId: null
+    },
+
     stores:{
         inventory:{
             model: 'InventoryDemo.model.Inventory',
