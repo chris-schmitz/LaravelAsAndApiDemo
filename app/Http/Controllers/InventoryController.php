@@ -16,7 +16,7 @@ class InventoryController extends Controller
         'name' => 'required',
         'brand_id' => 'required|exists:brands,id',
         'price' => 'required|numeric|min:0',
-        'image' => 'image',
+        'image_path' => 'image',
     ];
 
     public function __construct(Inventory $inventory)
